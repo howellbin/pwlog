@@ -1,0 +1,84 @@
+<head>
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
+</head>
+
+{% extends 'basic/base.html' %}
+{% load myprojects_tags %}
+{% block title %}
+    兴趣小组 | 存在与虚无
+{% endblock title%}
+{% block main-body %}
+    <div class="content-body">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8">
+                    {% block main %}
+                    {% endblock main %}
+                </main>
+                <aside class="col-md-4">
+                    {% block toc %}
+                    {% endblock toc %}
+                    <div class="widget widget-recent-projects">
+                        <h3 class="widget-title">最近发表</h3>
+                        {% get_recent_projects as recent_project_list %}
+                        <ul>                    
+                            {% for project in recent_project_list %}
+                            <li>
+                                <a href="{{ project.get_absolute_url }}">{{ project.title }}</a>
+                            </li>
+                            {% empty %}
+                            目前没有兴趣小组!
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="widget widget-archives">
+                        <h3 class="widget-title">存档</h3>
+                        {% archives as date_list %}
+                        <ul>
+                            {% for a_date in date_list %}
+                            <li>
+                                <a href="{% url 'myprojects:archives' a_date.year %}">{{ a_date.year }}</a>
+                            </li>
+                            {% empty %}
+                            尚无存档!
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-category">
+                        <h3 class="widget-title">主题</h3>
+                        {% get_categories as category_list %}
+                        <ul>
+                            {% for category in category_list %}                        
+                            <li>
+                                <a href="{% url 'myprojects:category' category.pk %}">{{ category.name }}<span class="project-count"> ({{ category.num_projects }})</span></a>
+                            </li>
+                            {% empty %}
+                            目前没有相关主题!
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="widget widget-tag-cloud">
+                        <h3 class="widget-title">标签</h3>
+                        {% get_tags as tag_list %}
+                        <ul>
+                            {% for tag in tag_list %}
+                            <li>
+                                <a href="{% url 'myprojects:tag' tag.pk %}">{{ tag.name }}</a>
+                            </li>
+                            {% empty %}
+                            目前没有相关标签!
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </div>
+{% endblock main-body %}

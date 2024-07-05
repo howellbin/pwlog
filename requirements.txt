@@ -1,0 +1,10 @@
+asgiref==3.6.0
+Django==4.1.9
+django-haystack==3.2.1
+importlib-metadata==6.0.0
+Markdown==3.4.1
+pytz==2022.7.1
+sqlparse==0.4.4
+tzdata==2022.7
+Whoosh==2.7.4
+zipp==3.11.0
